@@ -1,0 +1,234 @@
+<!doctype html>
+<html ng-app="FusionReactorAlert">
+<head>
+	<meta charset="utf-8" />
+	<meta name="description" content="A simple utility that renders your Fusion Reactor Alert email data easy-to-read report" />
+
+	<title>
+		Fusion Rector Alert Email Report
+	</title>
+
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:100,400,600,300"></link>
+	<link rel="stylesheet" type="text/css" href="./css/app.css"></link>
+</head>
+<body ng-controller="app.AlertController">
+
+	<h1>
+		Fusion Rector Alert Email Report
+	</h1>
+
+	<p class="author">
+		by <a href="http://www.bennadel.com" target="_blank">Ben Nadel</a>
+	</p>
+
+	<!-- BEGIN: Interfaces. -->
+	<div ng-switch="subview">
+
+		<!-- BEGIN: Data Input View. -->
+		<div ng-switch-when="input">
+
+
+			<form ng-submit="showReport()">
+
+				<label>
+					<textarea ng-model="form.emailContent"></textarea>
+				</label>
+
+				<button type="submit">
+					<em>Parse Fusion Reactor Alert Email &raquo;</em>
+				</button>
+
+			</form>
+
+
+		</div>
+		<!-- END: Data Input View. -->
+
+
+		<!-- BEGIN: Data Output View. -->
+		<div
+			ng-switch-when="output"
+			ng-controller="app.ReportController">
+
+
+			<p class="tabs">
+				
+				<a 
+					ng-click="showRunningRequests()" 
+					ng-class="{ on: ( subview == 'runningRequests' ) }">
+					View Running Requests ( {{ report.runningRequests.length }} )
+				</a> 
+
+				&mdash;
+
+				<a
+					ng-click="showColdFusionThreads()" 
+					ng-class="{ on: ( subview == 'coldfusionThreads' ) }">
+					View ColdFusion Threads ( {{ report.coldfusionThreads.length }} )
+				</a>
+
+			</p>
+
+			<div ng-switch="subview">
+
+				<!-- BEGIN: Running Requests. -->
+				<div ng-switch-when="runningRequests" class="data-grid running-requests">
+
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+						<col width="1%" />
+						<col width="1%" />
+						<col width="1%" />
+						<col width="97%" />
+						<thead>
+							<tr>
+								<th>
+									#
+								</th>
+								<th>
+									Duration (MS)
+								</th>
+								<th>
+									IP Address
+								</th>
+								<th>
+									Request URL
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr 
+								ng-repeat=" runningRequest in report.runningRequests "
+								ng-class="{ 'last-selected': ( runningRequest == lastSelectedRequest ) }">
+								<td class="index">
+									{{ report.runningRequests.length - $index }}
+								</td>
+								<td class="duration">
+									{{ runningRequest.duration | number }}
+								</td>
+								<td class="ip-address">
+									{{ runningRequest.ipAddress }}
+								</td>
+								<td class="request-url">
+									<a ng-click="showRequestDetail( runningRequest )">{{ runningRequest.requestUrl }}</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<div
+						ng-show="selectedRequest"
+						ng-click="hideRequestDetail()"
+						class="selected-request">
+
+						<div class="content">
+
+							<span id="selected-request-content"></span>
+
+							<h3>
+								{{ selectedRequest.duration | number }}ms &mdash; {{ selectedRequest.requestUrl }}
+							</h3>
+
+							<div
+								ng-repeat=" item in selectedRequest.thread.stacktrace "
+								class="stacktrace-item"
+								ng-class="{ coldfusion: isColdFusionStacktraceItem( item ) }">
+								{{ item }}
+							</div>
+
+							<p class="properties">
+								<strong>requestID</strong> : {{ selectedRequest.requestID }}<br />
+								<strong>requestUrl</strong> : {{ selectedRequest.requestUrl }}<br />
+								<strong>status</strong> : {{ selectedRequest.status }}<br />
+								<strong>startedAt</strong> : {{ selectedRequest.startedAt }}<br />
+								<strong>startedAtDate</strong> : {{ selectedRequest.startedAtDate }}<br />
+								<strong>threadID</strong> : {{ selectedRequest.threadID }}<br />
+								<strong>ipAddress</strong> : {{ selectedRequest.ipAddress }}<br />
+								<strong>method</strong> : {{ selectedRequest.method }}<br />
+								<strong>duration</strong> : {{ selectedRequest.duration }}<br />
+								<strong>usedMemoryPercent</strong> : {{ selectedRequest.usedMemoryPercent }}<br />
+								<strong>maxMemoryKB</strong> : {{ selectedRequest.maxMemoryKB }}<br />
+								<strong>usedMemoryKB</strong> : {{ selectedRequest.usedMemoryKB }}<br />
+								<strong>totalMemoryKB</strong> : {{ selectedRequest.totalMemoryKB }}<br />
+								<strong>freeMemoryKB</strong> : {{ selectedRequest.freeMemoryKB }}<br />
+								<strong>queryString</strong> : {{ selectedRequest.queryString }}<br />
+								<strong>statusCode</strong> : {{ selectedRequest.statusCode }}<br />
+								<strong>cpuTime</strong> : {{ selectedRequest.cpuTime }}<br />
+								<strong>jdbcQueriesRun</strong> : {{ selectedRequest.jdbcQueriesRun }}<br />
+								<strong>jdbcTotalTime</strong> : {{ selectedRequest.jdbcTotalTime }}<br />
+								<strong>jdbcTotalExecutionTime</strong> : {{ selectedRequest.jdbcTotalExecutionTime }}<br />
+								<strong>jdbcTotalRowCount</strong> : {{ selectedRequest.jdbcTotalRowCount }}<br />
+								<strong>amfRquest</strong> : {{ selectedRequest.amfRquest }}<br />
+								<strong>bytesSent</strong> : {{ selectedRequest.bytesSent }}<br />
+								<strong>timeToFirstByte</strong> : {{ selectedRequest.timeToFirstByte }}<br />
+								<strong>timeToLastByte</strong> : {{ selectedRequest.timeToLastByte }}<br />
+								<strong>timeToStreamOpen</strong> : {{ selectedRequest.timeToStreamOpen }}<br />
+								<strong>timeToStreamClose</strong> : {{ selectedRequest.timeToStreamClose }}<br />
+								<strong>userAgent</strong> : {{ selectedRequest.userAgent }}<br />
+							</p>
+
+						</div>
+
+					</div>
+
+				</div>
+				<!-- END: Running Requests. -->
+
+
+				<!-- BEGIN: ColdFusion Threads. -->
+				<div ng-switch-when="coldfusionThreads" class="data-grid coldfusion-threads">
+
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+						<col width="1%" />
+						<col width="99%" />
+						<thead>
+							<tr>
+								<th>
+									Thread ID
+								</th>
+								<th>
+									Stacktrace
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat=" coldfusionThread in report.coldfusionThreads ">
+								<td class="thread-id">
+									{{ coldfusionThread.threadID }}
+								</td>
+								<td class="stacktrace">
+									<div
+										ng-repeat=" item in coldfusionThread.stacktrace "
+										class="stacktrace-item"
+										ng-class="{ coldfusion: isColdFusionStacktraceItem( item ) }">
+										{{ item }}
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+				</div>
+				<!-- END: ColdFusion Threads. -->
+
+			</div>
+
+
+		</div>
+		<!-- END: Data Output View. -->
+
+	</div>
+	<!-- END: Interfaces. -->
+
+
+	<!-- Vendor libraries. -->
+	<script type="text/javascript" src="./vendor/jquery/jquery-2.0.3.min.js"></script>
+	<script type="text/javascript" src="./vendor/angularjs/angular-1.0.7.min.js"></script>
+
+	<!-- Application scripts. -->
+	<script type="text/javascript" src="./js/main.js"></script>
+	<script type="text/javascript" src="./js/beans/fusion-reactor-alert.js"></script>
+	<script type="text/javascript" src="./js/controllers/alert-controller.js"></script>
+	<script type="text/javascript" src="./js/controllers/report-controller.js"></script>
+
+</body>
+</html>

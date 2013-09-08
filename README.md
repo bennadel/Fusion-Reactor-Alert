@@ -34,6 +34,18 @@ however, since it's a ColdFusion query, you can run your own query-of-queries
 to order it as you see fit. The running-requests query also contains a query 
 column, "thread" that embeds the Java thread directly in the request record.
 
+## [Online JavaScript Viewer][4]
+
+After building the ColdFusion version of the Fusion Reactor Alert, I tried to 
+re-create it using JavaScript so that I could build a client-only, online 
+viewer. Now, you can pull up the [online viewer][4] and just copy-paste your
+Fusion Reactor Alert email and quickly see your report:
+
+![JavaScript Viewer Online][5]
+
+I put this together in a few hours, so it probably has all kinds of bugs; but
+it works with the sample data.
+
 ## Caveats
 
 The parsing in this ColdFusion component is based on the way that GMail reports
@@ -49,3 +61,5 @@ that I have not accounted for.
 [1]: http://www.bennadel.com
 [2]: https://plus.google.com/108976367067760160494?rel=author
 [3]: http://www.fusion-reactor.com/
+[4]: http://bennadel.github.io/Fusion-Reactor-Alert/examples/javascript/index.htm
+[5]: ./screenshots/javascript-viewer.png?raw=true

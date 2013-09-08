@@ -10703,6 +10703,3 @@ Running Requests (Full Details)
  Time to Stream Close (ms): - [Note: Data is still streaming]
  User Agent: BenNadelBot/358 CFNetwork/596.4.3 Darwin/12.4.0 (x86_64)
  (MacBookPro10%2C1)
-
-
-
