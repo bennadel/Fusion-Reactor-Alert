@@ -109,7 +109,10 @@
 									{{ runningRequest.ipAddress }}
 								</td>
 								<td class="request-url">
-									<a ng-click="showRequestDetail( runningRequest )">{{ runningRequest.requestUrl }}</a>
+									<a ng-click="showRequestDetail( runningRequest )">
+										{{ runningRequest.requestUrl }}
+										<span ng-show="runningRequest.queryString">? {{ runningRequest.queryString }}</span>
+									</a>
 								</td>
 							</tr>
 						</tbody>
@@ -126,6 +129,10 @@
 
 							<h3>
 								{{ selectedRequest.duration | number }}ms &mdash; {{ selectedRequest.requestUrl }}
+
+								<span ng-show="selectedRequest.queryString">
+									? {{ selectedRequest.queryString }}
+								</span>
 							</h3>
 
 							<div
