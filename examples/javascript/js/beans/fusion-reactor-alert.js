@@ -239,7 +239,7 @@
 				return(
 					javaThread.isCFThread &&
 					javaThread.stacktrace.length &&
-					( javaThread.stacktrace[ 0 ].indexOf( "java.lang.Object.wait" ) === -1 )
+					( javaThread.stacktrace[ 0 ].code.indexOf( "java.lang.Object.wait" ) === -1 )
 				);
 
 			}
@@ -409,14 +409,52 @@
 				// Now, add the raw stack trace data, if we have any.
 				if ( stacktraceContent.length ) {
 
-					javaThreadProperties.stacktrace = stacktraceContent.split( /\n+/g );
+					var stacktrace = stacktraceContent.split( /\n+/g );
 
 				} else {
 
-					javaThreadProperties.stacktrace = [];
+					var stacktrace = [];
 					
 				}
-				
+
+				// Now that we have the raw stacktrace split up into individual code items, we
+				// want to wrap those items in something that attempts to categorize each stack 
+				// trace item more fully.
+				javaThreadProperties.stacktrace = [];
+
+				// As an optimization, we'll pull out the ColdFusion stacktrace items on their own.
+				javaThreadProperties.coldfusionStacktrace = [];
+
+				// As we prepare the stacktrace items, we want to keep track of whether any of 
+				// them contain ColdFusion references. 
+				javaThreadProperties.hasColdFusion = false;
+
+				var coldfusionPattern = /\.(cfm|cfc)/i;
+
+				// Prepare the items.
+				for ( var i = 0 ; i < stacktrace.length ; i++ ) {
+
+					var item = {
+						code: stacktrace[ i ]
+					};
+
+					javaThreadProperties.stacktrace.push( item );
+
+					item.isColdFusion = coldfusionPattern.test( item.code );
+
+					// If any of the items contain a ColdFusion reference, flag the thread as
+					// containing visible ColdFusion data.
+					if ( item.isColdFusion ) {
+
+						javaThreadProperties.hasColdFusion = true;
+
+						// Track this item in the ColdFusion-specific list as well.
+						javaThreadProperties.coldfusionStacktrace.push( item );
+
+					}				
+
+				}
+
 				return( javaThreadProperties );
 
 			}

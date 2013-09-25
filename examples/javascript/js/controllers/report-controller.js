@@ -37,15 +37,6 @@
 		};
 
 
-		// I determine if the given stacktrace item represents a call to a ColdFusion
-		// page or ColdFusion component.
-		$scope.isColdFusionStacktraceItem = function( item ) {
-
-			return( item.search( /\.cf[cm]:/i ) !== -1 );
-
-		};
-
-
 		// I show the ColdFusion threads in the report.
 		$scope.showColdFusionThreads = function() {
 

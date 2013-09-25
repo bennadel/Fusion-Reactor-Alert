@@ -78,6 +78,7 @@
 						<col width="1%" />
 						<col width="1%" />
 						<col width="1%" />
+						<col width="1%" />
 						<col width="97%" />
 						<thead>
 							<tr>
@@ -89,6 +90,9 @@
 								</th>
 								<th>
 									IP Address
+								</th>
+								<th>
+									Insight
 								</th>
 								<th>
 									Request URL
@@ -107,6 +111,10 @@
 								</td>
 								<td class="ip-address">
 									{{ runningRequest.ipAddress }}
+								</td>
+								<td class="insight" ng-switch="runningRequest.thread.hasColdFusion">
+									<span ng-switch-when="true">CF</span>
+									<span ng-switch-default><br /></span>
 								</td>
 								<td class="request-url">
 									<a ng-click="showRequestDetail( runningRequest )">
@@ -135,12 +143,40 @@
 								</span>
 							</h3>
 
-							<div
-								ng-repeat=" item in selectedRequest.thread.stacktrace "
-								class="stacktrace-item"
-								ng-class="{ coldfusion: isColdFusionStacktraceItem( item ) }">
-								{{ item }}
+							<!-- If we have ColdFusion-specific stacktrace items, duplicate them at the top of the report. -->
+							<div ng-show="selectedRequest.thread.coldfusionStacktrace.length">
+
+								<h4>
+									ColdFusion Insight ( Extracted From Stacktrace )
+								</h4>
+
+								<ol class="stacktrace">
+
+									<li
+										ng-repeat=" item in selectedRequest.thread.coldfusionStacktrace "
+										class="stacktrace-item coldfusion">
+										{{ item.code }}
+									</li>
+
+								</ol>
+
+								<h4>
+									Stacktrace
+								</h4>
+
 							</div>
+
+							<!-- Show full stacktrace. -->
+							<ol class="stacktrace">
+
+								<li
+									ng-repeat=" item in selectedRequest.thread.stacktrace "
+									class="stacktrace-item"
+									ng-class="{ coldfusion: item.isColdFusion }">
+									{{ item.code }}
+								</li>
+
+							</ol>
 
 							<p class="properties">
 								<strong>requestID</strong> : {{ selectedRequest.requestID }}<br />
@@ -203,12 +239,18 @@
 									{{ coldfusionThread.threadID }}
 								</td>
 								<td class="stacktrace">
-									<div
-										ng-repeat=" item in coldfusionThread.stacktrace "
-										class="stacktrace-item"
-										ng-class="{ coldfusion: isColdFusionStacktraceItem( item ) }">
-										{{ item }}
-									</div>
+
+									<ol class="stacktrace">
+
+										<li
+											ng-repeat=" item in coldfusionThread.stacktrace "
+											class="stacktrace-item"
+											ng-class="{ coldfusion: item.isColdFusion }">
+											{{ item.code }}
+										</li>
+
+									</ol>
+
 								</td>
 							</tr>
 						</tbody>

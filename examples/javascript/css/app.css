@@ -138,19 +138,29 @@ div.data-grid td {
   padding: 5px 5px 5px 5px ;
   vertical-align: top ;
 }
+div.data-grid td.insight {
+  text-align: center ;
+}
 div.data-grid th:last-child,
 div.data-grid td:last-child {
   border-right-width: 0px ;
 }
-div.data-grid div.stacktrace-item {
+div.data-grid ol.stacktrace {
+  border-top: 1px solid #EAEAEA ;
+  list-style-type: none ;
+  margin: 16px 0px 16px 0px ;
+  padding: 0px 0px 0px 0px ;
+}
+div.data-grid ol.stacktrace li.stacktrace-item {
   border-bottom: 1px solid #EAEAEA ;
+  margin: 0px 0px 0px 0px ;
   padding: 2px 0px 2px 0px ;
 }
-div.data-grid div.stacktrace-item.coldfusion {
+div.data-grid ol.stacktrace li.stacktrace-item.coldfusion {
   background-color: #FFFFCC ;
   font-weight: 600 ;
 }
-div.data-grid div.stacktrace-item:hover {
+div.data-grid ol.stacktrace li.stacktrace-item:hover {
   background-color: #F0F0F0 ;
 }
 div.data-grid.running-requests tr.last-selected td {
@@ -172,6 +182,9 @@ div.data-grid.running-requests td.request-url a:hover {
 }
 div.data-grid.coldfusion-threads td.thread-id {
   white-space: nowrap ;
+}
+div.data-grid.coldfusion-threads td.stacktrace ol.stacktrace {
+  margin: 0px 0px 0px 0px ;
 }
 div.selected-request {
   background-color: rgba(0, 0, 0, 0.85);
@@ -207,6 +220,11 @@ div.selected-request div.content h3 {
   line-height: 32px ;
   margin-top: 0px ;
   padding: 0px 10px 0px 10px ;
+}
+div.selected-request div.content h4 {
+  font-size: 14px ;
+  line-height: 19px ;
+  margin: 20px 0px 14px 0px ;
 }
 div.selected-request div.content p.properties {
   line-height: 25px ;

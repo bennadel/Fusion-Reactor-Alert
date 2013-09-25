@@ -154,6 +154,10 @@ div.data-grid {
 		font-size: 12px ;
 		padding: 5px 5px 5px 5px ;
 		vertical-align: top ;
+
+		&.insight {
+			text-align: center ;
+		}
 	}
 
 	th:last-child,
@@ -161,17 +165,25 @@ div.data-grid {
 		border-right-width: 0px ;
 	}
 
-	div.stacktrace-item {
-		border-bottom: 1px solid #EAEAEA ;
-		padding: 2px 0px 2px 0px ;
+	ol.stacktrace {
+		border-top: 1px solid #EAEAEA ;
+		list-style-type: none ;
+		margin: 16px 0px 16px 0px ;
+		padding: 0px 0px 0px 0px ;
+		
+		li.stacktrace-item {
+			border-bottom: 1px solid #EAEAEA ;
+			margin: 0px 0px 0px 0px ;
+			padding: 2px 0px 2px 0px ;
 
-		&.coldfusion {
-			background-color: #FFFFCC ;
-			font-weight: 600 ;
-		}
+			&.coldfusion {
+				background-color: #FFFFCC ;
+				font-weight: 600 ;
+			}
 
-		&:hover {
-			background-color: #F0F0F0 ;
+			&:hover {
+				background-color: #F0F0F0 ;
+			}
 		}
 	}
 
@@ -206,6 +218,12 @@ div.data-grid {
 	&.coldfusion-threads {
 		td.thread-id {
 			white-space: nowrap ;
+		}
+
+		td.stacktrace {
+			ol.stacktrace {
+				margin: 0px 0px 0px 0px ;
+			}
 		}
 	}
 }
@@ -245,6 +263,12 @@ div.selected-request {
 			line-height: 32px ;
 			margin-top: 0px ;
 			padding: 0px 10px 0px 10px ;
+		}
+
+		h4 {
+			font-size: 14px ;
+			line-height: 19px ;
+			margin: 20px 0px 14px 0px ;
 		}
 
 		p.properties {
