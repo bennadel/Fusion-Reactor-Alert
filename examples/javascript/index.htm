@@ -69,6 +69,8 @@
 
 			</p>
 
+			<input type="text" ng-model="form.filter" placeholder="Filter Requests" class="filter" />
+			
 			<div ng-switch="subview">
 
 				<!-- BEGIN: Running Requests. -->
@@ -101,7 +103,7 @@
 						</thead>
 						<tbody>
 							<tr 
-								ng-repeat=" runningRequest in report.runningRequests "
+								ng-repeat=" runningRequest in report.runningRequests | filter:{ requestUrl: form.filter } "
 								ng-class="{ 'last-selected': ( runningRequest == lastSelectedRequest ) }">
 								<td class="index">
 									{{ report.runningRequests.length - $index }}

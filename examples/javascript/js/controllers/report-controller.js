@@ -18,6 +18,11 @@
 		// removed to keep the UI partially updated.
 		$scope.lastSelectedRequest = null;
 
+		// I define the form input for the ngModel.
+		$scope.form = {
+			filter: ""
+		};
+
 		// I am the view to render - requests or threads.
 		$scope.subview = "runningRequests";
 

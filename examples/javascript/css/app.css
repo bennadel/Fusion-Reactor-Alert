@@ -113,6 +113,14 @@ p.tabs a {
 p.tabs a.on {
   background-color: #FF0033 ;
 }
+input.filter {
+  font-size: 18px ;
+  margin: 0px 0px 0px 0px ;
+  position: fixed ;
+  right: 20px ;
+  top: 65px ;
+  width: 200px ;
+}
 div.data-grid {
   border: 2px solid #CCCCCC ;
   bottom: 20px ;
