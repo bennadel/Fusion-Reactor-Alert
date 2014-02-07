@@ -119,7 +119,7 @@
 									{{ runningRequest.ipAddress }}
 								</td>
 								<td class="insight" ng-switch="runningRequest.thread.hasColdFusion">
-									<span ng-switch-when="true">CF</span>
+									<span ng-switch-when="true">CF-{{ runningRequest.thread.coldfusionStacktrace.length }}</span>
 									<span ng-switch-default><br /></span>
 								</td>
 								<td class="request-url">
