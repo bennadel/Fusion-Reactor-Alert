@@ -81,7 +81,8 @@
 						<col width="1%" />
 						<col width="1%" />
 						<col width="1%" />
-						<col width="97%" />
+						<col width="95%" />
+						<col width="1%" />
 						<thead>
 							<tr>
 								<th>
@@ -98,6 +99,9 @@
 								</th>
 								<th>
 									Request URL
+								</th>
+								<th>
+									Thread ID
 								</th>
 							</tr>
 						</thead>
@@ -123,6 +127,9 @@
 										{{ runningRequest.requestUrl }}
 										<span ng-show="runningRequest.queryString">? {{ runningRequest.queryString }}</span>
 									</a>
+								</td>
+								<td class="ip-address">
+									{{ runningRequest.threadID }}
 								</td>
 							</tr>
 						</tbody>
