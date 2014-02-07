@@ -107,7 +107,7 @@
 						</thead>
 						<tbody>
 							<tr 
-								ng-repeat=" runningRequest in report.runningRequests | filter:{ requestUrl: form.filter } "
+								ng-repeat=" runningRequest in report.runningRequests | filter:filterRequests "
 								ng-class="{ 'last-selected': ( runningRequest == lastSelectedRequest ) }">
 								<td class="index">
 									{{ report.runningRequests.length - $index }}
