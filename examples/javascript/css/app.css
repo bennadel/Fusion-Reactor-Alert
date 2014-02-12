@@ -150,6 +150,9 @@ div.data-grid td.insight {
   text-align: center ;
   white-space: nowrap ;
 }
+div.data-grid td.thread-id {
+  white-space: nowrap ;
+}
 div.data-grid th:last-child,
 div.data-grid td:last-child {
   border-right-width: 0px ;

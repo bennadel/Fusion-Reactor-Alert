@@ -81,7 +81,8 @@
 						<col width="1%" />
 						<col width="1%" />
 						<col width="1%" />
-						<col width="95%" />
+						<col width="1%" />
+						<col width="94%" />
 						<col width="1%" />
 						<thead>
 							<tr>
@@ -96,6 +97,9 @@
 								</th>
 								<th>
 									Insight
+								</th>
+								<th>
+									Verb
 								</th>
 								<th>
 									Request URL
@@ -121,6 +125,9 @@
 								<td class="insight" ng-switch="runningRequest.thread.hasColdFusion">
 									<span ng-switch-when="true">CF-{{ runningRequest.thread.coldfusionStacktrace.length }}</span>
 									<span ng-switch-default><br /></span>
+								</td>
+								<td class="verb">
+									{{ runningRequest.method }}
 								</td>
 								<td class="request-url">
 									<a ng-click="showRequestDetail( runningRequest )">

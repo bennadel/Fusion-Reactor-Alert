@@ -36,7 +36,7 @@
 		$scope.filterRequests = function( request ) {
 
 			var filter = $scope.form.filter.toLowerCase();
-
+			
 			return(
 				( request.requestUrl.toLowerCase().indexOf( filter ) != -1 ) ||
 				( request.queryString.toLowerCase().indexOf( filter ) != -1 ) ||
